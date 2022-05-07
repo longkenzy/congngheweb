@@ -10,7 +10,7 @@
     <title>TechPhone</title>
 
     <!-- Favicons-->
-    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="img/icontechphone.png" type="image/x-icon">
     <link rel="apple-touch-icon" type="image/x-icon" href="img/apple-touch-icon-57x57-precomposed.png">
     <link rel="apple-touch-icon" type="image/x-icon" sizes="72x72" href="img/apple-touch-icon-72x72-precomposed.png">
     <link rel="apple-touch-icon" type="image/x-icon" sizes="114x114" href="img/apple-touch-icon-114x114-precomposed.png">
@@ -27,9 +27,35 @@
 
     <!-- SPECIFIC CSS -->
     <link href="css/product_page.css" rel="stylesheet">
+    <script src="./js/jquery-3.6.0.min.js"></script>
+    <script src="./js/product.js"></script>
+    <script src="./js/cart.js"></script>
+    <script>
+        function GetURLParameter(sParam) {
+            var sPageURL = window.location.search.substring(1);
+            var sURLVariables = sPageURL.split('&');
+            for (var i = 0; i < sURLVariables.length; i++) {
+                var sParameterName = sURLVariables[i].split('=');
+                if (sParameterName[0] == sParam) {
+                    return sParameterName[1];
+                }
+            }
+        }
 
-    <!-- YOUR CUSTOM CSS -->
-    <link href="css/custom.css" rel="stylesheet">
+
+        var productid = GetURLParameter('productid');
+        var productIndex = getProductIndex(productid);
+
+        $(function() {
+            $("#header").load("./views/header.html");
+            $("#footer").load("./views/footer.html");
+
+            if (productIndex == null || productIndex < 0 || productIndex > productArray.length) {
+                $("#wp-content").html("<h1>Product not found</h1>")
+            }
+            console.log(productIndex);
+        });
+    </script>
 
 </head>
 
@@ -45,7 +71,7 @@
                     <div class="row small-gutters">
                         <div class="col-xl-3 col-lg-3 d-lg-flex align-items-center">
                             <div id="logo">
-                                <a href="TrangChu.html"><img src="img/techphone.png" alt="" width="200" height="70"></a>
+                                <a href="index.html"><img src="img/techphone.png" alt="" width="200" height="70"></a>
                             </div>
                         </div>
                         <nav class="col-xl-6 col-lg-7">
@@ -59,12 +85,12 @@
                             <!-- Mobile menu button -->
                             <div class="main-menu">
                                 <div id="header_menu">
-                                    <a href="TrangChu.html"><img src="img/logo_black.svg" alt="" width="100" height="35"></a>
+                                    <a href="index.html"><img src="img/logo_black.svg" alt="" width="100" height="35"></a>
                                     <a href="#" class="open_close" id="close_in"><i class="ti-close"></i></a>
                                 </div>
                                 <ul>
                                     <li>
-                                        <a href="TrangChu.html" class="show-submenu">Home</a>
+                                        <a href="index.html" class="show-submenu">Home</a>
                                     </li>
                                     <li class="megamenu submenu">
                                         <a href="javascript:void(0);" class="show-submenu-mega">Shop</a>
@@ -176,28 +202,7 @@
                                 <li>
                                     <div class="dropdown dropdown-cart">
                                         <a href="GioHang.html" class="cart_bt"><strong>2</strong></a>
-                                        <div class="dropdown-menu">
-                                            <ul>
-                                                <li>
-                                                    <a href="product-detail-1.html">
-                                                        <figure><img src="img/products/product_placeholder_square_small.jpg" data-src="img/products/shoes/thumb/1.jpg" alt="" width="50" height="50" class="lazy"></figure>
-                                                        <strong><span>1x Armor Air x Fear</span>$90.00</strong>
-                                                    </a>
-                                                    <a href="#0" class="action"><i class="ti-trash"></i></a>
-                                                </li>
-                                                <li>
-                                                    <a href="product-detail-1.html">
-                                                        <figure><img src="img/products/product_placeholder_square_small.jpg" data-src="img/products/shoes/thumb/2.jpg" alt="" width="50" height="50" class="lazy"></figure>
-                                                        <strong><span>1x Armor Okwahn II</span>$110.00</strong>
-                                                    </a>
-                                                    <a href="0" class="action"><i class="ti-trash"></i></a>
-                                                </li>
-                                            </ul>
-                                            <div class="total_drop">
-                                                <div class="clearfix"><strong>Total</strong><span>$200.00</span></div>
-                                                <a href="GioHang.html" class="btn_1 outline">View Cart</a><a href="TrangThanhToan.html" class="btn_1">Checkout</a>
-                                            </div>
-                                        </div>
+
                                     </div>
                                     <!-- /dropdown-cart-->
                                 </li>
@@ -211,8 +216,7 @@
                                             <a href="account.html" class="btn_1">Sign In or Sign Up</a>
                                             <ul>
                                                 <li>
-                                                    <a href="track-order.html"><i class="ti-truck"></i>Track your
-                                                        Order</a>
+                                                    <a href="#"><i class="ti-truck"></i>Track your Order</a>
                                                 </li>
                                                 <li>
                                                     <a href="account.html"><i class="ti-package"></i>My Orders</a>
@@ -256,129 +260,132 @@
         </header>
         <!-- /header -->
 
-        <main>
+        <main id="productDetailHeader">
+            <script>
+                $(function() {
+                    var productDetailHeader = `
             <div class="container margin_30">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="all">
+                                        <div class="slider">
+                                            <div class="owl-carousel owl-theme main">
+                                                <div style="background-image: url(${productArray[productIndex].img1});" class="item-box"></div>
+                                                <div style="background-image: url(${productArray[productIndex].img2});" class="item-box">
+                                                </div>
+                                                <div style="background-image: url(${productArray[productIndex].img3});" class="item-box">
+                                                </div>
+                                                <div style="background-image: url(${productArray[productIndex].img4});" class="item-box">
+                                                </div>
+                                                <div style="background-image: url(${productArray[productIndex].img5});" class="item-box">
+                                                </div>
 
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="all">
-                            <div class="slider">
-                                <div class="owl-carousel owl-theme main">
-                                    <div style="background-image: url(img/products/ChiTietSanPham/iphone13promax1.jpg);" class="item-box"></div>
-                                    <div style="background-image: url(img/products/ChiTietSanPham/iphone13promax2.jpg);" class="item-box">
+                                            </div>
+                                            <div class="left nonl"><i class="ti-angle-left"></i></div>
+                                            <div class="right"><i class="ti-angle-right"></i></div>
+                                        </div>
+                                        <div class="slider-two">
+                                            <div class="owl-carousel owl-theme thumbs">
+                                                <div style="background-image: url(${productArray[productIndex].img1});" class="item active"></div>
+                                                <div style="background-image: url(${productArray[productIndex].img2});" class="item"></div>
+                                                <div style="background-image: url(${productArray[productIndex].img3});" class="item"></div>
+                                                <div style="background-image: url(${productArray[productIndex].img4});" class="item"></div>
+                                                <div style="background-image: url(${productArray[productIndex].img5});" class="item"></div>
+                                            </div>
+                                            <div class="left-t nonl-t"></div>
+                                            <div class="right-t"></div>
+                                        </div>
                                     </div>
-                                    <div style="background-image: url(img/products/ChiTietSanPham/iphone13promax3.jpg);" class="item-box">
-                                    </div>
-                                    <div style="background-image: url(img/products/ChiTietSanPham/iphone13promax4.jpg);" class="item-box">
-                                    </div>
-                                    <div style="background-image: url(img/products/ChiTietSanPham/iphone13promax5.jpg);" class="item-box">
-                                    </div>
-
                                 </div>
-                                <div class="left nonl"><i class="ti-angle-left"></i></div>
-                                <div class="right"><i class="ti-angle-right"></i></div>
-                            </div>
-                            <div class="slider-two">
-                                <div class="owl-carousel owl-theme thumbs">
-                                    <div style="background-image: url(img/products/ChiTietSanPham/iphone13promax1.jpg);" class="item active"></div>
-                                    <div style="background-image: url(img/products/ChiTietSanPham/iphone13promax2.jpg);" class="item"></div>
-                                    <div style="background-image: url(img/products/ChiTietSanPham/iphone13promax3.jpg);" class="item"></div>
-                                    <div style="background-image: url(img/products/ChiTietSanPham/iphone13promax4.jpg);" class="item"></div>
-                                    <div style="background-image: url(img/products/ChiTietSanPham/iphone13promax5.jpg);" class="item"></div>
-                                </div>
-                                <div class="left-t nonl-t"></div>
-                                <div class="right-t"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="breadcrumbs">
-                            <ul>
-                                <li><a href="TrangChu.html">Home</a></li>
-                                <li><a href="DanhSachSanPham.html">Category</a></li>
-                                <li>Page active</li>
-                            </ul>
-                        </div>
-                        <!-- /page_header -->
-                        <div class="prod_info">
-                            <h1>Iphone 13 Pro Max</h1>
-                            <span class="rating"><i class="icon-star voted"></i><i class="icon-star voted"></i><i
-                                    class="icon-star voted"></i><i class="icon-star voted"></i><i
-                                    class="icon-star"></i><em>4 reviews</em></span>
-                            <p>iPhone 13 Pro Max 512 GB một siêu phẩm đến từ nhà Apple chắc chắn đang được rất nhiều sự quan tâm từ iFan. Chiếc điện thoại này sở hữu màn hình siêu đẹp, hiệu năng bức phá từ con chip Apple A15 Bionic sẽ cho bạn trải nghiệm
-                                tuyệt vời, từ những tác vụ thông thường cho đến các ứng dụng chuyên nghiệp.</p>
-                            <div class="prod_options">
-                                <div class="row">
-                                    <label class="col-xl-5 col-lg-5  col-md-6 col-6 pt-0"><strong>Color</strong></label>
-                                    <div class="col-xl-4 col-lg-5 col-md-6 col-6 colors">
+                                <div class="col-md-6">
+                                    <div class="breadcrumbs">
+                                        <ul>
+                                            <li><a href="index.html">Home</a></li>
+                                            <li><a href="DanhSachSanPham.html">Category</a></li>
+                                            <li>Page active</li>
+                                        </ul>
+                                    </div>
+                                    <!-- /page_header -->
+                                    <div class="prod_info">
+                                        <h1>${productArray[productIndex].name}</h1>
+                                        <span class="rating"><i class="icon-star voted"></i><i class="icon-star voted"></i><i
+                                                class="icon-star voted"></i><i class="icon-star voted"></i><i
+                                                class="icon-star"></i><em>4 reviews</em></span>
+                                        <p>${productArray[productIndex].description}</p>
+                                        <div class="prod_options">
+                                            <div class="row">
+                                                <label class="col-xl-5 col-lg-5  col-md-6 col-6 pt-0"><strong>Color</strong></label>
+                                                <div class="col-xl-4 col-lg-5 col-md-6 col-6 colors">
+                                                    <ul>
+                                                        <li>
+                                                            <a href="#0" class="color color_1 active"></a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#0" class="color color_2"></a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#0" class="color color_3"></a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#0" class="color color_4"></a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-xl-5 col-lg-5 col-md-6 col-6"><strong>Version</strong> - RAM & ROM
+                                                    <a href="#0" data-bs-toggle="modal" data-bs-target="#size-modal"><i
+                                                            class="ti-help-alt"></i></a></label>
+                                                <div class="col-xl-4 col-lg-5 col-md-6 col-6">
+                                                    <div class="custom-select-form">
+                                                        <select class="wide">
+                                                            <option value="" selected>4GB - 64GB</option>
+                                                            <option value="">6GB - 64GB</option>
+                                                            <option value=" ">6GB - 128GB</option>
+                                                            <option value=" ">8GB - 512GB</option>
+                                                            <option value=" ">8GB - 1TB</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-xl-5 col-lg-5  col-md-6 col-6"><strong>Quantity</strong></label>
+                                                <div class="col-xl-4 col-lg-5 col-md-6 col-6">
+                                                    <div class="numbers-row">
+                                                        <input type="text" value="1" id="quantity_1" class="qty2" name="quantity_1">
+                                                        <div class="inc button_inc">+</div>
+                                                        <div class="dec button_inc">-</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-5 col-md-6">
+                                                <div class="price_main"><span class="new_price">${formatter.format(productArray[productIndex].newPrice)}</span><span class="percentage">-10%</span> <span class="old_price">${formatter.format(productArray[productIndex].oldPrice)}</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 col-md-6">
+                                                <div class="btn_add_to_cart"><a href="javascript:addToCart(${productArray[productIndex].productID})" class="btn_1">Add to Cart</a></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- /prod_info -->
+                                    <div class="product_actions">
                                         <ul>
                                             <li>
-                                                <a href="#0" class="color color_1 active"></a>
+                                                <a href="#"><i class="ti-heart"></i><span>Add to Wishlist</span></a>
                                             </li>
                                             <li>
-                                                <a href="#0" class="color color_2"></a>
-                                            </li>
-                                            <li>
-                                                <a href="#0" class="color color_3"></a>
-                                            </li>
-                                            <li>
-                                                <a href="#0" class="color color_4"></a>
+                                                <a href="#"><i class="ti-control-shuffle"></i><span>Add to Compare</span></a>
                                             </li>
                                         </ul>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <label class="col-xl-5 col-lg-5 col-md-6 col-6"><strong>Version</strong> - RAM & ROM
-                                        <a href="#0" data-bs-toggle="modal" data-bs-target="#size-modal"><i
-                                                class="ti-help-alt"></i></a></label>
-                                    <div class="col-xl-4 col-lg-5 col-md-6 col-6">
-                                        <div class="custom-select-form">
-                                            <select class="wide">
-                                                <option value="" selected>4GB - 64GB</option>
-                                                <option value="">6GB - 64GB</option>
-                                                <option value=" ">6GB - 128GB</option>
-                                                <option value=" ">8GB - 512GB</option>
-                                                <option value=" ">8GB - 1TB</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <label class="col-xl-5 col-lg-5  col-md-6 col-6"><strong>Quantity</strong></label>
-                                    <div class="col-xl-4 col-lg-5 col-md-6 col-6">
-                                        <div class="numbers-row">
-                                            <input type="text" value="1" id="quantity_1" class="qty2" name="quantity_1">
-                                        </div>
-                                    </div>
+                                    <!-- /product_actions -->
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-lg-5 col-md-6">
-                                    <div class="price_main"><span class="new_price">37.990.000đ</span><span class="percentage">-10%</span> <span class="old_price">39.990.00đ</span></div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="btn_add_to_cart"><a href="#0" class="btn_1">Add to Cart</a></div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- /prod_info -->
-                        <div class="product_actions">
-                            <ul>
-                                <li>
-                                    <a href="#"><i class="ti-heart"></i><span>Add to Wishlist</span></a>
-                                </li>
-                                <li>
-                                    <a href="#"><i class="ti-control-shuffle"></i><span>Add to Compare</span></a>
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- /product_actions -->
-                    </div>
-                </div>
+                            
                 <!-- /row -->
-            </div>
-            <!-- /container -->
-
+            
             <div class="tabs_product">
                 <div class="container">
                     <ul class="nav nav-tabs" role="tablist">
@@ -408,9 +415,7 @@
                                     <div class="row justify-content-between">
                                         <div class="col-lg-6">
                                             <h3>Thông tin sản phẩm</h3>
-                                            <p>Apple đã chính thức trình làng bộ 3 siêu phẩm iPhone 13, trong đó phiên bản iPhone 13 Pro Max 64GB có mức giá rẻ nhất nhưng vẫn được nâng cấp mạnh mẽ như iPhone Xr ra mắt trước đó. Nâng cấp mạnh mẽ về camera
-                                                Nói về nâng cấp thì camera chính là điểm có nhiều cải tiến nhất trên thế hệ iPhone mới. Nếu như trước đây iPhone Xr chỉ có một camera thì nay với iPhone 11 chúng ta sẽ có tới hai camera ở mặt sau. Ngoài
-                                                camera chính vẫn có độ phân giải 12 MP thì chúng ta sẽ có thêm một camera góc siêu rộng và cũng với độ phân giải tương tự.
+                                            <p>${productArray[productIndex].detailDescription}
                                             </p>
                                         </div>
                                         <div class="col-lg-5">
@@ -449,192 +454,15 @@
                     <!-- /container -->
                 </div>
                 <!-- /tab_content_wrapper -->
+            </div>
+            `;
+                    $('#productDetailHeader').html(productDetailHeader);
 
-                <div class="container margin_60_35">
-                    <div class="main_title">
-                        <h2>Similar Product</h2>
-                        <span>TechPhone</span>
-                    </div>
-                    <div class="owl-carousel owl-theme products_carousel">
-                        <div class="item">
-                            <div class="grid_item">
-                                <span class="ribbon new">New</span>
-                                <figure>
-                                    <a href="ChiTietSanPham.html">
-                                        <img class="owl-lazy" data-src="img/products/phone/3.jpg" alt="">
-                                    </a>
-                                </figure>
-                                <div class="rating"><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star"></i>
-                                </div>
-                                <a href="ChiTietSanPham.html">
-                                    <h3>Oppo Reno 7 Series</h3>
-                                </a>
-                                <div class="price_box">
-                                    <span class="new_price">11.650.000đ</span>
-                                </div>
-                                <ul>
-                                    <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to favorites"><i class="ti-heart"></i><span>Add to
-                                            favorites</span></a></li>
-                                    <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to compare"><i class="ti-control-shuffle"></i><span>Add to
-                                            compare</span></a></li>
-                                    <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to cart"><i class="ti-shopping-cart"></i><span>Add to cart</span></a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <!-- /grid_item -->
-                        </div>
-                        <!-- /item -->
-                        <div class="item">
-                            <div class="grid_item">
-                                <span class="ribbon new">New</span>
-                                <figure>
-                                    <a href="ChiTietSanPham.html">
-                                        <img class="owl-lazy" data-src="img/products/phone/4.jpg" alt="">
-                                    </a>
-                                </figure>
-                                <div class="rating"><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star"></i>
-                                </div>
-                                <a href="ChiTietSanPham.html">
-                                    <h3>Xiaomi 11T</h3>
-                                </a>
-                                <div class="price_box">
-                                    <span class="new_price">10.990.000đ</span>
-                                </div>
-                                <ul>
-                                    <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to favorites"><i class="ti-heart"></i><span>Add to
-                                            favorites</span></a></li>
-                                    <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to compare"><i class="ti-control-shuffle"></i><span>Add to
-                                            compare</span></a></li>
-                                    <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to cart"><i class="ti-shopping-cart"></i><span>Add to cart</span></a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <!-- /grid_item -->
-                        </div>
-                        <!-- /item -->
-                        <div class="item">
-                            <div class="grid_item">
-                                <span class="ribbon hot">Hot</span>
-                                <figure>
-                                    <a href="ChiTietSanPham.html">
-                                        <img class="owl-lazy" data-src="img/products/phone/5.jpg" alt="">
-                                    </a>
-                                </figure>
-                                <div class="rating"><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star"></i>
-                                </div>
-                                <a href="ChiTietSanPham.html">
-                                    <h3>Samsung Galaxy Z Fold3 5G</h3>
-                                </a>
-                                <div class="price_box">
-                                    <span class="new_price">33.990.000đ</span>
-                                </div>
-                                <ul>
-                                    <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to favorites"><i class="ti-heart"></i><span>Add to
-                                            favorites</span></a></li>
-                                    <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to compare"><i class="ti-control-shuffle"></i><span>Add to
-                                            compare</span></a></li>
-                                    <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to cart"><i class="ti-shopping-cart"></i><span>Add to cart</span></a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <!-- /grid_item -->
-                        </div>
-                        <!-- /item -->
-                        <div class="item">
-                            <div class="grid_item">
-                                <span class="ribbon hot">Hot</span>
-                                <figure>
-                                    <a href="ChiTietSanPham.html">
-                                        <img class="owl-lazy" data-src="img/products/phone/6.jpg" alt="">
-                                    </a>
-                                </figure>
-                                <div class="rating"><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star"></i>
-                                </div>
-                                <a href="ChiTietSanPham.html">
-                                    <h3>Vivo V23e</h3>
-                                </a>
-                                <div class="price_box">
-                                    <span class="new_price">7.790.000đ</span>
-                                </div>
-                                <ul>
-                                    <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to favorites"><i class="ti-heart"></i><span>Add to
-                                            favorites</span></a></li>
-                                    <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to compare"><i class="ti-control-shuffle"></i><span>Add to
-                                            compare</span></a></li>
-                                    <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to cart"><i class="ti-shopping-cart"></i><span>Add to cart</span></a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <!-- /grid_item -->
-                        </div>
-                        <!-- /item -->
-                        <div class="item">
-                            <div class="grid_item">
-                                <span class="ribbon hot">Hot</span>
-                                <figure>
-                                    <a href="ChiTietSanPham.html">
-                                        <img class="owl-lazy" data-src="img/products/phone/7.jpg" alt="">
-                                    </a>
-                                </figure>
-                                <div class="rating"><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star"></i>
-                                </div>
-                                <a href="ChiTietSanPham.html">
-                                    <h3>Samsung Galaxy A52s 5G 128GB</h3>
-                                </a>
-                                <div class="price_box">
-                                    <span class="new_price">8.890.000đ</span>
-                                </div>
-                                <ul>
-                                    <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to favorites"><i class="ti-heart"></i><span>Add to
-                                            favorites</span></a></li>
-                                    <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to compare"><i class="ti-control-shuffle"></i><span>Add to
-                                            compare</span></a></li>
-                                    <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to cart"><i class="ti-shopping-cart"></i><span>Add to cart</span></a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <!-- /grid_item -->
-                        </div>
-                        <!-- /item -->
-                    </div>
-                    <!-- /products_carousel -->
-                </div>
-                <!-- /container -->
+                });
+            </script>
 
-                <div class="feat">
-                    <div class="container">
-                        <ul>
-                            <li>
-                                <div class="box">
-                                    <i class="ti-gift"></i>
-                                    <div class="justify-content-center">
-                                        <h3>Free Shipping</h3>
-                                        <p>For all oders over $99</p>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="box">
-                                    <i class="ti-wallet"></i>
-                                    <div class="justify-content-center">
-                                        <h3>Secure Payment</h3>
-                                        <p>100% secure payment</p>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="box">
-                                    <i class="ti-headphone-alt"></i>
-                                    <div class="justify-content-center">
-                                        <h3>24/7 Support</h3>
-                                        <p>Online top support</p>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <!--/feat-->
+
+
 
         </main>
         <!-- /main -->
@@ -711,179 +539,136 @@
             </div>
         </footer>
         <!--/footer-->
+    </div>
+    <!-- page -->
+
+    <div id="toTop"></div>
+    <!-- Back to top button -->
+
+    <div class="top_panel">
+        <div class="container header_panel">
+            <a href="#0" class="btn_close_top_panel"><i class="ti-close"></i></a>
+            <label>1 product added to cart</label>
         </div>
-        <!-- page -->
-
-        <div id="toTop"></div>
-        <!-- Back to top button -->
-
-        <div class="top_panel">
-            <div class="container header_panel">
-                <a href="#0" class="btn_close_top_panel"><i class="ti-close"></i></a>
-                <label>1 product added to cart</label>
-            </div>
-            <!-- /header_panel -->
-            <div class="item">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-7">
-                            <div class="item_panel">
-                                <figure>
-                                    <img src="img/products/product_placeholder_square_small.jpg" data-src="img/products/shoes/1.jpg" class="lazy" alt="">
-                                </figure>
-                                <h4>1x Armor Air X Fear</h4>
-                                <div class="price_panel"><span class="new_price">$148.00</span><span class="percentage">-20%</span> <span class="old_price">$160.00</span></div>
-                            </div>
-                        </div>
-                        <div class="col-md-5 btn_panel">
-                            <a href="GioHang.html" class="btn_1 outline">View cart</a> <a href="TrangThanhToan.html" class="btn_1">Checkout</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- /item -->
-            <div class="container related">
-                <h4>Who bought this product also bought</h4>
+        <!-- /header_panel -->
+        <div class="item">
+            <div class="container">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-7">
                         <div class="item_panel">
-                            <a href="#0">
-                                <figure>
-                                    <img src="img/products/product_placeholder_square_small.jpg" data-src="img/products/shoes/2.jpg" alt="" class="lazy">
-                                </figure>
-                            </a>
-                            <a href="#0">
-                                <h5>Armor Okwahn II</h5>
-                            </a>
-                            <div class="price_panel"><span class="new_price">$90.00</span></div>
+                            <figure>
+                                <img data-src="img/products/phone/1.jpg" class="lazy" alt="">
+                            </figure>
+                            <h4>Iphone 13 Pro Max</h4>
+                            <div class="price_panel"><span class="new_price">37.990.000đ</span><span class="percentage">-10%</span> <span class="old_price">39.990.000đ</span></div>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="item_panel">
-                            <a href="#0">
-                                <figure>
-                                    <img src="img/products/product_placeholder_square_small.jpg" data-src="img/products/shoes/3.jpg" alt="" class="lazy">
-                                </figure>
-                            </a>
-                            <a href="#0">
-                                <h5>Armor Air Wildwood ACG</h5>
-                            </a>
-                            <div class="price_panel"><span class="new_price">$75.00</span><span class="percentage">-20%</span> <span class="old_price">$155.00</span></div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="item_panel">
-                            <a href="#0">
-                                <figure>
-                                    <img src="img/products/product_placeholder_square_small.jpg" data-src="img/products/shoes/4.jpg" alt="" class="lazy">
-                                </figure>
-                            </a>
-                            <a href="#0">
-                                <h5>Armor ACG React Terra</h5>
-                            </a>
-                            <div class="price_panel"><span class="new_price">$110.00</span></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- /related -->
-        </div>
-        <!-- /add_cart_panel -->
-
-        <!-- Size modal -->
-        <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="size-modal" id="size-modal" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Size guide</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p>Lorem ipsum dolor sit amet, et velit propriae invenire mea, ad nam alia intellegat. Aperiam mediocrem rationibus nec te. Tation persecuti accommodare pro te. Vis et augue legere, vel labitur habemus ocurreret ex.</p>
-                        <div class="table-responsive">
-                            <table class="table table-striped table-sm sizes">
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">US Sizes</th>
-                                        <td>6</td>
-                                        <td>6,5</td>
-                                        <td>7</td>
-                                        <td>7,5</td>
-                                        <td>8</td>
-                                        <td>8,5</td>
-                                        <td>9</td>
-                                        <td>9,5</td>
-                                        <td>10</td>
-                                        <td>10,5</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Euro Sizes</th>
-                                        <td>39</td>
-                                        <td>39</td>
-                                        <td>40</td>
-                                        <td>40-41</td>
-                                        <td>41</td>
-                                        <td>41-42</td>
-                                        <td>42</td>
-                                        <td>42-43</td>
-                                        <td>43</td>
-                                        <td>43-44</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">UK Sizes</th>
-                                        <td>5,5</td>
-                                        <td>6</td>
-                                        <td>6,5</td>
-                                        <td>7</td>
-                                        <td>7,5</td>
-                                        <td>8</td>
-                                        <td>8,5</td>
-                                        <td>9</td>
-                                        <td>9,5</td>
-                                        <td>10</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Inches</th>
-                                        <td>9.25"</td>
-                                        <td>9.5"</td>
-                                        <td>9.625"</td>
-                                        <td>9.75"</td>
-                                        <td>9.9375"</td>
-                                        <td>10.125"</td>
-                                        <td>10.25"</td>
-                                        <td>10.5"</td>
-                                        <td>10.625"</td>
-                                        <td>10.75"</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">CM</th>
-                                        <td>23,5</td>
-                                        <td>24,1</td>
-                                        <td>24,4</td>
-                                        <td>24,8</td>
-                                        <td>25,4</td>
-                                        <td>25,7</td>
-                                        <td>26</td>
-                                        <td>26,7</td>
-                                        <td>27</td>
-                                        <td>27,3</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- /table -->
+                    <div class="col-md-5 btn_panel">
+                        <a href="GioHang.html" class="btn_1 outline">View cart</a> <a href="TrangThanhToan.html" class="btn_1">Checkout</a>
                     </div>
                 </div>
             </div>
         </div>
+        <!-- /item -->
+
+        <!-- /related -->
+    </div>
+    <!-- /add_cart_panel -->
+
+    <!-- Size modal -->
+    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="size-modal" id="size-modal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Size guide</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Lorem ipsum dolor sit amet, et velit propriae invenire mea, ad nam alia intellegat. Aperiam mediocrem rationibus nec te. Tation persecuti accommodare pro te. Vis et augue legere, vel labitur habemus ocurreret ex.</p>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-sm sizes">
+                            <tbody>
+                                <tr>
+                                    <th scope="row">US Sizes</th>
+                                    <td>6</td>
+                                    <td>6,5</td>
+                                    <td>7</td>
+                                    <td>7,5</td>
+                                    <td>8</td>
+                                    <td>8,5</td>
+                                    <td>9</td>
+                                    <td>9,5</td>
+                                    <td>10</td>
+                                    <td>10,5</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Euro Sizes</th>
+                                    <td>39</td>
+                                    <td>39</td>
+                                    <td>40</td>
+                                    <td>40-41</td>
+                                    <td>41</td>
+                                    <td>41-42</td>
+                                    <td>42</td>
+                                    <td>42-43</td>
+                                    <td>43</td>
+                                    <td>43-44</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">UK Sizes</th>
+                                    <td>5,5</td>
+                                    <td>6</td>
+                                    <td>6,5</td>
+                                    <td>7</td>
+                                    <td>7,5</td>
+                                    <td>8</td>
+                                    <td>8,5</td>
+                                    <td>9</td>
+                                    <td>9,5</td>
+                                    <td>10</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Inches</th>
+                                    <td>9.25"</td>
+                                    <td>9.5"</td>
+                                    <td>9.625"</td>
+                                    <td>9.75"</td>
+                                    <td>9.9375"</td>
+                                    <td>10.125"</td>
+                                    <td>10.25"</td>
+                                    <td>10.5"</td>
+                                    <td>10.625"</td>
+                                    <td>10.75"</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">CM</th>
+                                    <td>23,5</td>
+                                    <td>24,1</td>
+                                    <td>24,4</td>
+                                    <td>24,8</td>
+                                    <td>25,4</td>
+                                    <td>25,7</td>
+                                    <td>26</td>
+                                    <td>26,7</td>
+                                    <td>27</td>
+                                    <td>27,3</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /table -->
+                </div>
+            </div>
+        </div>
+    </div>
 
 
-        <!-- COMMON SCRIPTS -->
-        <script src="js/common_scripts.min.js"></script>
-        <script src="js/main.js"></script>
+    <!-- COMMON SCRIPTS -->
+    <script src="js/common_scripts.min.js"></script>
+    <script src="js/main.js"></script>
 
-        <!-- SPECIFIC SCRIPTS -->
-        <script src="js/carousel_with_thumbs.js"></script>
+    <!-- SPECIFIC SCRIPTS -->
+    <script src="js/carousel_with_thumbs.js"></script>
 
 </body>
 

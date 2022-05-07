@@ -354,18 +354,3 @@
 
 
 })(window.jQuery);
-
-// =========================
-function ktMatKhau() {
-    var regexMK = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-    var mk = document.getElementById("password").value;
-    if (regexMK.test(mk)) {
-        document.getElementById("danger_pw").innerHTML = "";
-        return true;
-    } else {
-        document.getElementById("danger_pw").innerHTML = "Nhập lại mật khẩu";
-        return false
-
-    }
-
-}

@@ -10,7 +10,7 @@
     <title>TechPhone</title>
 
     <!-- Favicons-->
-    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="img/icontechphone.png" type="image/x-icon">
     <link rel="apple-touch-icon" type="image/x-icon" href="img/apple-touch-icon-57x57-precomposed.png">
     <link rel="apple-touch-icon" type="image/x-icon" sizes="72x72" href="img/apple-touch-icon-72x72-precomposed.png">
     <link rel="apple-touch-icon" type="image/x-icon" sizes="114x114" href="img/apple-touch-icon-114x114-precomposed.png">
@@ -27,9 +27,12 @@
 
     <!-- SPECIFIC CSS -->
     <link href="css/cart.css" rel="stylesheet">
+    <script src="./js/jquery-3.6.0.min.js"></script>
+    <script src="./js/cart.js"></script>
+    <script src="./js/product.js"></script>
 
-    <!-- YOUR CUSTOM CSS -->
-    <link href="css/custom.css" rel="stylesheet">
+
+
 
 </head>
 
@@ -45,7 +48,7 @@
                     <div class="row small-gutters">
                         <div class="col-xl-3 col-lg-3 d-lg-flex align-items-center">
                             <div id="logo">
-                                <a href="TrangChu.html"><img src="img/techphone.png" alt="" width="200" height="70"></a>
+                                <a href="index.html"><img src="img/techphone.png" alt="" width="200" height="70"></a>
                             </div>
                         </div>
                         <nav class="col-xl-6 col-lg-7">
@@ -59,12 +62,12 @@
                             <!-- Mobile menu button -->
                             <div class="main-menu">
                                 <div id="header_menu">
-                                    <a href="TrangChu.html"><img src="img/logo_black.svg" alt="" width="100" height="35"></a>
+                                    <a href="index.html"><img src="img/logo_black.svg" alt="" width="100" height="35"></a>
                                     <a href="#" class="open_close" id="close_in"><i class="ti-close"></i></a>
                                 </div>
                                 <ul>
                                     <li>
-                                        <a href="TrangChu.html" class="show-submenu">Home</a>
+                                        <a href="index.html" class="show-submenu">Home</a>
                                     </li>
                                     <li class="megamenu submenu">
                                         <a href="javascript:void(0);" class="show-submenu-mega">Shop</a>
@@ -151,10 +154,10 @@
                             <nav class="categories">
                                 <ul class="clearfix">
                                     <li><span>
-											<a href="#">
-												<span class="hamburger hamburger--spin">
-													<span class="hamburger-box">
-														<span class="hamburger-inner"></span>
+										<a href="#">
+											<span class="hamburger hamburger--spin">
+												<span class="hamburger-box">
+													<span class="hamburger-inner"></span>
                                         </span>
                                         </span>
                                         Categories
@@ -175,28 +178,7 @@
                                 <li>
                                     <div class="dropdown dropdown-cart">
                                         <a href="GioHang.html" class="cart_bt"><strong>2</strong></a>
-                                        <div class="dropdown-menu">
-                                            <ul>
-                                                <li>
-                                                    <a href="product-detail-1.html">
-                                                        <figure><img src="img/products/product_placeholder_square_small.jpg" data-src="img/products/shoes/thumb/1.jpg" alt="" width="50" height="50" class="lazy"></figure>
-                                                        <strong><span>1x Armor Air x Fear</span>$90.00</strong>
-                                                    </a>
-                                                    <a href="#0" class="action"><i class="ti-trash"></i></a>
-                                                </li>
-                                                <li>
-                                                    <a href="product-detail-1.html">
-                                                        <figure><img src="img/products/product_placeholder_square_small.jpg" data-src="img/products/shoes/thumb/2.jpg" alt="" width="50" height="50" class="lazy"></figure>
-                                                        <strong><span>1x Armor Okwahn II</span>$110.00</strong>
-                                                    </a>
-                                                    <a href="0" class="action"><i class="ti-trash"></i></a>
-                                                </li>
-                                            </ul>
-                                            <div class="total_drop">
-                                                <div class="clearfix"><strong>Total</strong><span>$200.00</span></div>
-                                                <a href="GioHang.html" class="btn_1 outline">View Cart</a><a href="TrangThanhToan.html" class="btn_1">Checkout</a>
-                                            </div>
-                                        </div>
+
                                     </div>
                                     <!-- /dropdown-cart-->
                                 </li>
@@ -210,7 +192,7 @@
                                             <a href="account.html" class="btn_1">Sign In or Sign Up</a>
                                             <ul>
                                                 <li>
-                                                    <a href="track-order.html"><i class="ti-truck"></i>Track your Order</a>
+                                                    <a href="#"><i class="ti-truck"></i>Track your Order</a>
                                                 </li>
                                                 <li>
                                                     <a href="account.html"><i class="ti-package"></i>My Orders</a>
@@ -287,55 +269,50 @@
                             </th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <div class="thumb_cart">
-                                    <img data-src="img/products/phone/1.jpg" class="lazy" alt="Image">
-                                </div>
-                                <span class="item_cart">Iphone 13 Pro Max</span>
-                            </td>
-                            <td>
-                                <strong>37.990.000đ</strong>
-                            </td>
-                            <td>
-                                <div class="numbers-row">
-                                    <input type="text" value="1" id="quantity_1" class="qty2" name="quantity_1">
-                                    <div class="inc button_inc">+</div>
-                                    <div class="dec button_inc">-</div>
-                                </div>
-                            </td>
-                            <td>
-                                <strong>37.990.000đ</strong>
-                            </td>
-                            <td class="options">
-                                <a href="#"><i class="ti-trash"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="thumb_cart">
-                                    <img data-src="img/products/phone/2.jpg" class="lazy" alt="Image">
-                                </div>
-                                <span class="item_cart">Samsung Galaxy S22 Ultra 5G</span>
-                            </td>
-                            <td>
-                                <strong>32.990.000đ</strong>
-                            </td>
-                            <td>
-                                <div class="numbers-row">
-                                    <input type="text" value="1" id="quantity_2" class="qty2" name="quantity_2">
-                                    <div class="inc button_inc">+</div>
-                                    <div class="dec button_inc">-</div>
-                                </div>
-                            </td>
-                            <td>
-                                <strong>32.990.000đ</strong>
-                            </td>
-                            <td class="options">
-                                <a href="#"><i class="ti-trash"></i></a>
-                            </td>
-                        </tr>
+                    <tbody id="cart">
+                        <script defer>
+                            $(function() {
+                                var html = ``;
+                                var i = 0;
+                                getCart().forEach(e => {
+                                    i++;
+                                    html += `
+                                                    <tr>
+                                                        <td>
+                                                            <div class="thumb_cart">
+                                                                <img src=${productArray[getProductIndex(e.productId)].img} class="lazy" alt="Image">
+                                                            </div>
+                                                            <span class="item_cart">${productArray[getProductIndex(e.productId)].name} </span>
+                                                        </td>
+                                                        <td>
+                                                            <strong>${formatter.format(productArray[getProductIndex(e.productId)].newPrice)} </strong>
+                                                        </td>
+                                                        <td>
+                                                            <div class="numbers-row">
+                                                                <input type="text" value="1" id="quantity_1" class="qty2" name="quantity_1">
+                                                                <div class="inc button_inc">+</div>
+                                                                <div class="dec button_inc">-</div>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <strong>${formatter.format(productArray[getProductIndex(e.productId)].newPrice)} </strong>
+                                                        </td>
+                                                        <td class="options">
+                                                            <a href="#"><i class="ti-trash"></i></a>
+                                                        </td>
+                                                    </tr>`;
+                                });
+                                $("#cart").html(html);
+
+                                function procedureCart() {
+                                    alert("Đơn hàng đã đặt thành công.\n Nhấn OK để quay lại trang chủ");
+                                    sessionStorage.removeItem("cart");
+                                    window.location.href = "index.html";
+                                }
+
+
+                            });
+                        </script>
 
                     </tbody>
                 </table>
@@ -365,15 +342,28 @@
                     <div class="row justify-content-end">
                         <div class="col-xl-4 col-lg-4 col-md-6">
                             <ul>
-                                <li>
-                                    <span>Subtotal</span> 70.980.000đ
+                                <li id="subtotal">
+
+
                                 </li>
                                 <li>
                                     <span>Shipping</span> 30.000đ
                                 </li>
-                                <li>
-                                    <span>Total</span> 71.010.000đ
+                                <li id="total">
+
                                 </li>
+                                <script defer>
+                                    var sum = 0;
+                                    getCart().forEach(e => {
+                                        sum += productArray[getProductIndex(e.productId)].newPrice * e.quantity;
+                                    });
+                                    $('#subtotal').html(`
+                                         <span>Subtotal</span> ${formatter.format(sum)}
+                                    `);
+                                    $('#total').html(`
+                                         <span>Subtotal</span> ${formatter.format(sum+30000)}
+                                    `);
+                                </script>
                             </ul>
                             <a href="TrangThanhToan.html" class="btn_1 full-width cart">Checkout</a>
                         </div>
